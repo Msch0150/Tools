@@ -3,29 +3,27 @@ Sub ConvertCitationsInFootnotesToText()
 ' ConvertCitationsInFootnotesToText Makro
 ' Interates through all footnotes and converts citations to plain text
 '
-Dim iFld As Field
-Dim oRng As Range
+Dim iField As Field
 
-Dim oFeets As Footnotes
-Dim oFoot As Footnote
 Dim oRange As Range
-Dim szFootNoteText As String
+Dim oFootnotes As Footnotes
+Dim oFootnote As Footnote
 
-' Grabs the collection of FootNotes
-Set oFeets = Word.ActiveDocument.Footnotes
+' Grabs the FootNotes
+Set oFootnotes = Word.ActiveDocument.Footnotes
 
 ' Iterates through each footnote
-For Each oFoot In oFeets
-    For Each iFld In oFoot.Range.Fields
-      If iFld.Type = wdFieldCitation Then
-          iFld.Select
-          Set oRng = Selection.Range
-          oRng.Start = oRng.Start - 1
-          oRng.End = oRng.End + 1
-          oRng.Select
-          oRng.Text = iFld.Result
+For Each oFootnote In oFootnotes
+    For Each iField In oFootnote.Range.Fields
+      If iField.Type = wdFieldCitation Then
+          iField.Select
+          Set oRange = Selection.Range
+          oRange.Start = oRange.Start - 1
+          oRange.End = oRange.End + 1
+          oRange.Select
+          oRange.Text = iField.Result
       End If
-    Next iFld
+    Next iField
 Next
 End Sub
 
@@ -34,16 +32,18 @@ Sub ConvertCitationsInDocumentToText()
 ' ConvertCitationInDocumentToText Makro
 '
 '
-Dim iFld As Field
-Dim oRng As Range
-For Each iFld In ActiveDocument.Range.Fields
-    If iFld.Type = wdFieldCitation Then
-        iFld.Select
-        Set oRng = Selection.Range
-        oRng.Start = oRng.Start - 1
-        oRng.End = oRng.End + 1
-        oRng.Select
-        oRng.Text = iFld.Result
-    End If
-Next iFld
+Dim iField As Field
+Dim oRange As Range
+
+For Each iField In ActiveDocument.Range.Fields
+    If iField.Type = wdFieldCitation Then
+        iField.Select
+          Set oRange = Selection.Range
+          oRange.Start = oRange.Start - 1
+          oRange.End = oRange.End + 1
+          oRange.Select
+          oRange.Text = iField.Result
+      End If
+    Next iField
+Next
 End Sub
